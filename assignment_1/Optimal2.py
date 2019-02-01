@@ -81,3 +81,23 @@ model01.fit(x_train, y_train,
 scores = model01.evaluate(x_test, y_test, verbose=1)
 print('Test loss:', scores[0])
 print('Test accuracy:', scores[1])
+
+history = model01.history
+history_dict = history.history
+acc = history.history['acc']
+val_acc = history.history['val_acc']
+loss = history.history['loss']
+val_loss = history.history['val_loss']
+
+epochs = range(1, len(acc) + 1)
+plt.plot(epochs, acc, 'go', label='Training acc')
+# b is for "solid blue line"
+plt.plot(epochs, val_acc, 'g', label='Validation acc')
+plt.title('Training and validation acc')
+plt.xlabel('Epochs')
+plt.ylabel('acc')
+plt.legend()
+
+plt.show()
+
+
