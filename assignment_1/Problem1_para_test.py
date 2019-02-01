@@ -45,21 +45,6 @@ from keras import layers
 from keras.layers import Dense, Dropout, Activation
 from keras import optimizers
 
-
-fnetwork = models.Sequential()
-fnetwork.add(layers.Dense(512, activation='relu', input_shape=(3072,)))
-fnetwork.add(layers.Dense(10, activation='softmax'))
-
-fnetwork.compile(optimizer='rmsprop',
-                loss='categorical_crossentropy',
-                metrics=['accuracy'])
-
-fnetwork.fit(x_train, y_train, epochs=20, batch_size=128)
-
-test_loss, test_acc = fnetwork.evaluate(x_test, y_test)
-
-print('test_acc:', test_acc)
-
 def para_test(bsize, nlay, deep, lr, ActFun, DropRate, ep):
     model = models.Sequential()
     model.add(layers.Dense(nlay, activation=ActFun, input_shape=(3072,)))
@@ -77,50 +62,60 @@ def para_test(bsize, nlay, deep, lr, ActFun, DropRate, ep):
     model.fit(x_train, y_train, epochs=ep, batch_size = bsize)
     return (model)
 
-m1 = para_test(bsize=128, nlay=1024, deep=False, lr=0.05, ActFun='relu', DropRate=0.25, ep=500)
-test_loss, test_acc = m1.evaluate(x_test, y_test)
-print('test_acc:', test_acc)
+mb = para_test(bsize=128, nlay=512, deep=False, lr=0.05, ActFun='relu', DropRate=0.25, ep=40)
+m1 = para_test(bsize=128, nlay=512, deep=False, lr=0.05, ActFun='relu', DropRate=0.25, ep=10)
+m2 = para_test(bsize=1000, nlay=512, deep=False, lr=0.05, ActFun='relu', DropRate=0.25, ep=40)
+m3 = para_test(bsize=128, nlay=64, deep=False, lr=0.05, ActFun='relu', DropRate=0.25, ep=40)
+m4 = para_test(bsize=128, nlay=512, deep=True, lr=0.05, ActFun='relu', DropRate=0.25, ep=40)
+m5 = para_test(bsize=128, nlay=512, deep=False, lr=0.05, ActFun='relu', DropRate=0.75, ep=40)
+m6 = para_test(bsize=128, nlay=512, deep=False, lr=0.05, ActFun='sigmoid', DropRate=0.25, ep=40)
+m7 = para_test(bsize=128, nlay=512, deep=False, lr=0.5, ActFun='relu', DropRate=0.25, ep=40)
+#m_optimal
 
-history = m1.history
-history_dict = history.history
+def show_r(model):
+    
+    test_loss, test_acc = model.evaluate(x_test, y_test)
+    print('test_acc:', test_acc)
 
-acc = history.history['acc']
-#val_acc = history.history['val_acc']
-loss = history.history['loss']
-#val_loss = history.history['val_loss']
+    history = model.history
+    #history_dict = history.history
 
-epochs = range(1, len(acc) + 1)
+    acc = history.history['acc']
+    print('train acc:', acc[-1])
+    #val_acc = history.history['val_acc']
+    loss = history.history['loss']
+    #val_loss = history.history['val_loss']
 
-# "bo" is for "blue dot"
-plt.plot(epochs, loss, 'bo', label='Training loss')
-# b is for "solid blue line"
-#plt.plot(epochs, val_loss, 'b', label='Validation loss')
-plt.title('Training loss')
-plt.xlabel('Epochs')
-plt.ylabel('Loss')
-plt.legend()
+    epochs = range(1, len(acc) + 1)
 
-plt.show()
+    # "bo" is for "blue dot"
+    plt.plot(epochs, loss, 'bo', label='Training loss')
+    # b is for "solid blue line"
+    #plt.plot(epochs, val_loss, 'b', label='Validation loss')
+    plt.title('Training loss')
+    plt.xlabel('Epochs')
+    plt.ylabel('Loss')
+    plt.legend()
 
-plt.plot(epochs, acc, 'go', label='Training loss')
-# b is for "solid blue line"
-#plt.plot(epochs, val_acc, 'g', label='Validation loss')
-plt.title('Training acc')
-plt.xlabel('Epochs')
-plt.ylabel('acc')
-plt.legend()
+    plt.show()
 
-plt.show()
+    plt.plot(epochs, acc, 'go', label='Training acc')
+    # b is for "solid blue line"
+    #plt.plot(epochs, val_acc, 'g', label='Validation loss')
+    plt.title('Training acc')
+    plt.xlabel('Epochs')
+    plt.ylabel('acc')
+    plt.legend()
 
+    plt.show()
 
-
-
-
-
-
-
-
-
-
+show_r(mb)
+show_r(m1)
+show_r(m2)
+show_r(m3)
+show_r(m4)
+show_r(m5)
+show_r(m6)
+show_r(m7)
 
 
