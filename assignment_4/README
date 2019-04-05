@@ -1,0 +1,13 @@
+CLAAT WEBSITE
+https://codelabs-preview.appspot.com/?file_id=16NjunXgE7xuCq4VSOVIJwtF5vVoxoEJ3XIhNzLa4v8E#0
+
+set: SNLI DATA  https://nlp.stanford.edu/projects/snli/
+pre-train model--> GLOVE Model:   glove.840B.300d.txt. from -->https://nlp.stanford.edu/projects/glove/
+Reference paper: 
+1. Enhanced LSTM for Natural Language Inference, -->https://arxiv.org/abs/1609.06038
+2. Learning Natural Language Inference with LSTM,-->chrome-extension://oemmndcbldboiebfnladdacbdfmadadm/https://www.aclweb.org/anthology/N16-1170
+3. An overview of Natural Language Inference Data Collection,-->chrome-extension://oemmndcbldboiebfnladdacbdfmadadm/https://aclweb.org/anthology/W17-7203
+4. Supervised Learning of Universal Sentence Representations from Natural Language Inference Data,-->https://arxiv.org/abs/1705.02364
+
+precomputed_glove.weights.npy,--> https://drive.google.com/file/d/1F6omX42Q3eTKF4jX2ijND4c5LpOCJBfD/view?usp=sharing
+
